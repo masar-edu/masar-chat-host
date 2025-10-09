@@ -35,7 +35,7 @@ database:
         host: postgres
         database: synapse
 
-enable_registration: false
+enable_registration: true
 enable_registration_without_verification: false
 admin_api: true
 
