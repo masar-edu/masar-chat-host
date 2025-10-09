@@ -36,7 +36,7 @@ database:
         database: synapse
 
 enable_registration: true
-enable_registration_without_verification: false
+enable_registration_without_verification: true
 admin_api: true
 
 
@@ -105,17 +105,17 @@ rc_message:
   burst_count: 15
 
 experimental_features:
-  msc3861: # OIDC
-    enabled: true
-    issuer: https://${DOMAIN}/
-    client_id: ${MAS_CLIENT_ID}
-    client_auth_method: client_secret_basic
-    client_secret: '${SECRETS_MAS_CLIENT_SECRET}'
-    admin_token: '${SECRETS_MAS_MATRIX_SECRET}'
-    account_management_url: "https://${MAS_FQDN}/account"
+  # msc3861: # OIDC - DISABLED to allow Synapse registration
+  #   enabled: false
+  #   issuer: https://${DOMAIN}/
+  #   client_id: ${MAS_CLIENT_ID}
+  #   client_auth_method: client_secret_basic
+  #   client_secret: '${SECRETS_MAS_CLIENT_SECRET}'
+  #   admin_token: '${SECRETS_MAS_MATRIX_SECRET}'
+  #   account_management_url: "https://${MAS_FQDN}/account"
 
-  # QR login
-  msc4108_enabled: true
+  # QR login - DISABLED (requires MAS)
+  # msc4108_enabled: true
 
   # MSC3266: Room summary API. Used for knocking over federation
   msc3266_enabled: true
