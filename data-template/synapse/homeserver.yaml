@@ -35,6 +35,11 @@ database:
         host: postgres
         database: synapse
 
+enable_registration: false
+enable_registration_without_verification: false
+admin_api: true
+
+
 log_config: "/data/log.config"
 media_store_path: /data/media_store
 registration_shared_secret: '${SECRETS_SYNAPSE_REGISTRATION_SHARED_SECRET}'
