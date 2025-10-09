@@ -81,6 +81,20 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+      synapse:
+        condition: service_started
+      mas:
+        condition: service_started
+      element-web:
+        condition: service_healthy
+      element-call:
+        condition: service_started
+      livekit:
+        condition: service_started
+      livekit-jwt:
+        condition: service_started
+      synapse-generic-worker-1:
+        condition: service_healthy
 
   certbot:
     image: certbot/certbot:latest
@@ -129,6 +143,7 @@ services:
   synapse:
     image: ghcr.io/element-hq/synapse:latest
     user: $USER_ID:$GROUP_ID
+    container_name: synapse
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
