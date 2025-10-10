@@ -126,6 +126,8 @@ experimental_features:
 
   # disable_badge_count to get accurate app badge counts in Element X
   msc4076_enabled: true
+  authentication:
+    enabled: false
 
 # The maximum allowed duration by which sent events can be delayed, as
 # per MSC4140. Must be a positive value if set.  Defaults to no
