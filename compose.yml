@@ -32,13 +32,14 @@ services:
       SYNAPSE_REPORT_STATS: ${REPORT_STATS}
     entrypoint: "/entrypoint.sh"
 
-  generate-mas-secrets:
-    restart: "no"
-    image: ghcr.io/element-hq/matrix-authentication-service:latest
-    user: $USER_ID:$GROUP_ID
-    volumes:
-      - ${VOLUME_PATH}/data/mas:/data:rw
-    command: "config generate -o /data/config.yaml.default"
+  # MAS secrets generation - DISABLED
+  # generate-mas-secrets:
+  #   restart: "no"
+  #   image: ghcr.io/element-hq/matrix-authentication-service:latest
+  #   user: $USER_ID:$GROUP_ID
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mas:/data:rw
+  #   command: "config generate -o /data/config.yaml.default"
 
   init:
     build: init
@@ -54,8 +55,8 @@ services:
     depends_on:
       generate-synapse-secrets:
         condition: service_completed_successfully
-      generate-mas-secrets:
-        condition: service_completed_successfully
+      # generate-mas-secrets:
+      #   condition: service_completed_successfully
 
   nginx:
     image: nginx:latest
@@ -82,8 +83,6 @@ services:
       init:
         condition: service_completed_successfully
       synapse:
-        condition: service_started
-      mas:
         condition: service_started
       element-web:
         condition: service_healthy
@@ -205,20 +204,22 @@ services:
     depends_on:
       - synapse
 
-  mas:
-    image: ghcr.io/element-hq/matrix-authentication-service:latest
-    restart: unless-stopped
-    volumes:
-      - ${VOLUME_PATH}/data/mas:/data:rw
-      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-    networks:
-      - backend
-    command: "server --config=/data/config.yaml"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      init:
-        condition: service_completed_successfully
+  # MAS (Matrix Authentication Service) - DISABLED
+  # We've disabled MAS integration in Synapse and are using Synapse's built-in authentication
+  # mas:
+  #   image: ghcr.io/element-hq/matrix-authentication-service:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mas:/data:rw
+  #     - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
+  #   networks:
+  #     - backend
+  #   command: "server --config=/data/config.yaml"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     init:
+  #       condition: service_completed_successfully
 
   mailhog:
     image: mailhog/mailhog:latest
