@@ -141,7 +141,7 @@ services:
       - backend
 
   synapse:
-    image: ghcr.io/element-hq/synapse:latest
+    image: masarhub/synapse:latest
     user: $USER_ID:$GROUP_ID
     container_name: synapse
     restart: unless-stopped
