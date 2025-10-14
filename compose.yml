@@ -64,6 +64,8 @@ services:
       - "80:80"
       - "443:443"
       - "8448:8448"
+      - "8080:8080"
+      - "8080:8080"
     stop_grace_period: 0s
     volumes:
       - ${VOLUME_PATH}/data/nginx/conf.d:/etc/nginx/conf.d
